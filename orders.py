@@ -6,6 +6,15 @@ inv = Inventory()
 
 
 def process_order(item_name, quantity, coupon_percent=0):
+    if not isinstance(quantity, int) or isinstance(quantity, bool) or quantity <= 0:
+        return None
+    if (
+        not isinstance(coupon_percent, (int, float))
+        or isinstance(coupon_percent, bool)
+        or not 0 <= coupon_percent <= 100
+    ):
+        return None
+
     stock = inv.get_stock(item_name)
     if stock is None or stock < quantity:
         return None
