@@ -40,3 +40,12 @@ def test_process_order_handles_missing_item():
     # Expected behavior: should not crash and should return None
     assert result is None
 
+
+def test_process_order_invalid_inputs():
+    inv.add_item("item", 10)
+
+    # negative quantity
+    assert process_order("item", -1) is None
+
+    # invalid coupon
+    assert process_order("item", 2, 150) is None
