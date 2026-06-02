@@ -44,8 +44,13 @@ def test_process_order_handles_missing_item():
 def test_process_order_invalid_inputs():
     inv.add_item("item", 10)
 
-    # negative quantity
+    # quantity must be a positive int (not bool)
     assert process_order("item", -1) is None
+    assert process_order("item", 1.5) is None
+    assert process_order("item", True) is None
 
-    # invalid coupon
+    # coupon must be a number in the range 0..100 (not bool)
     assert process_order("item", 2, 150) is None
+    assert process_order("item", 2, -5) is None
+    assert process_order("item", 2, "10") is None
+    assert process_order("item", 2, False) is None
